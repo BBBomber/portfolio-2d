@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pong Game</title>
+    <title>Games - Pong</title>
     <link href="dist/styles.css" rel="stylesheet" />
   </head>
   <body>
@@ -22,12 +22,42 @@
 
     <main>
       <h1>Pong Game</h1>
-      <canvas
-        id="pong-game"
-        width="600"
-        height="400"
-        style="border: 1px solid #000"
-      ></canvas>
+
+      <!-- Game Container to scope the canvas and overlays -->
+      <div
+        id="pong-container"
+        style="position: relative; width: 600px; height: 400px; margin: auto"
+      >
+        <canvas
+          id="pong-game"
+          width="600"
+          height="400"
+          style="border: 1px solid #000"
+        ></canvas>
+
+        <!-- Start Menu Overlay -->
+        <div id="start-menu" class="overlay" style="display: flex">
+          <div class="overlay-content">
+            <h2>Welcome to Pong!</h2>
+            <button id="start-button" class="btn">Start Game</button>
+          </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="game-over" class="overlay" style="display: none">
+          <div class="overlay-content">
+            <h2>Game Over</h2>
+            <p id="final-score"></p>
+            <button id="restart-button" class="btn">Restart Game</button>
+            <button id="quit-button" class="btn">Quit</button>
+          </div>
+        </div>
+
+        <!-- Quit Button -->
+        <button id="quit-game" class="btn quit-btn-large" style="display: none">
+          Quit Game
+        </button>
+      </div>
     </main>
 
     <script src="js/pong.js"></script>
