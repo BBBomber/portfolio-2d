@@ -1,7 +1,7 @@
 // Snake Game Variables
 let snakeCanvas = document.getElementById("snake-game");
 let snakeCtx = snakeCanvas.getContext("2d");
-let snake = [{ x: 200, y: 200 }];
+let snake = [{ x: 200, y: 200, specialColorDuration: 0 }]; // Added `specialColorDuration` to track food animation
 let food = { x: 300, y: 300 };
 let currentDirection = { x: 0, y: 0 }; // The current movement direction of the snake
 let nextDirection = { x: 0, y: 0 }; // The next movement direction based on keypress
@@ -11,6 +11,8 @@ let snakeIsRunning = false;
 let snakeLastTime = 0; // Renamed lastTime to snakeLastTime
 let timeAccumulator = 0; // Time between movement
 let moveInterval = 1 / snakeSpeed; // Time between each movement in seconds
+
+const foodColorDuration = snake.length + 5; // The length of the snake to track the food movement animation
 
 // Get overlays
 const startMenu = document.getElementById("snake-start-menu");
@@ -27,7 +29,7 @@ scoreSound.preload = "auto";
 // Start Snake Game
 export function startSnakeGame() {
   console.log("Starting Snake game..."); // Debugging output
-  snake = [{ x: 200, y: 200 }];
+  snake = [{ x: 200, y: 200, specialColorDuration: 0 }];
   snakeSize = 20;
   currentDirection = { x: snakeSize, y: 0 }; // Start moving right
   nextDirection = { x: snakeSize, y: 0 }; // Next direction will also be right
@@ -116,10 +118,17 @@ function moveSnake() {
   if (head.x === food.x && head.y === food.y) {
     scoreSound.currentTime = 0; // Reset sound
     scoreSound.play(); // Play score sound
+    head.specialColorDuration = foodColorDuration;
     generateFood(); // Eat food and generate new one
   } else {
     snake.pop(); // Remove the tail
   }
+  // Reduce specialColorDuration for all segments
+  snake.forEach((segment) => {
+    if (segment.specialColorDuration > 0) {
+      segment.specialColorDuration--; // The special color fades as the snake moves
+    }
+  });
 }
 
 // Check if Game Over
@@ -141,11 +150,17 @@ function isGameOver() {
   return false;
 }
 
-// Draw Snake
+// Draw Snake with the "food animation" effect
 function drawSnake() {
   snakeCtx.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height); // Clear the canvas
-  snake.forEach((segment) => {
-    snakeCtx.fillStyle = "green";
+  snake.forEach((segment, index) => {
+    if (segment.specialColorDuration > 0) {
+      // Special color for the segments that are part of the "food animation"
+      snakeCtx.fillStyle = "orange";
+    } else {
+      // Normal snake body color
+      snakeCtx.fillStyle = "green";
+    }
     snakeCtx.fillRect(segment.x, segment.y, snakeSize, snakeSize);
   });
 }
@@ -156,12 +171,26 @@ function drawFood() {
   snakeCtx.fillRect(food.x, food.y, snakeSize, snakeSize);
 }
 
-// Generate New Food
+// Generate New Food that does not overlap with the snake
 function generateFood() {
-  food.x =
-    Math.floor(Math.random() * (snakeCanvas.width / snakeSize)) * snakeSize;
-  food.y =
-    Math.floor(Math.random() * (snakeCanvas.height / snakeSize)) * snakeSize;
+  let validFoodPosition = false;
+
+  // Keep generating a new food position until it's not on the snake
+  while (!validFoodPosition) {
+    food.x =
+      Math.floor(Math.random() * (snakeCanvas.width / snakeSize)) * snakeSize;
+    food.y =
+      Math.floor(Math.random() * (snakeCanvas.height / snakeSize)) * snakeSize;
+
+    // Check if food is on any snake segment
+    validFoodPosition = true; // Assume the position is valid
+    for (let segment of snake) {
+      if (segment.x === food.x && segment.y === food.y) {
+        validFoodPosition = false; // Food is on the snake, so it's invalid
+        break; // No need to check other segments, generate a new food position
+      }
+    }
+  }
 }
 
 // Event Listeners
