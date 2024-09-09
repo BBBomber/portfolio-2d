@@ -171,7 +171,7 @@ function drawFood() {
   snakeCtx.fillRect(food.x, food.y, snakeSize, snakeSize);
 }
 
-// Generate New Food that does not overlap with the snake
+// Generate New Food that does not overlap with the snak
 function generateFood() {
   let validFoodPosition = false;
 
