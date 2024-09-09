@@ -337,5 +337,14 @@ quitGameButton.addEventListener("click", quitGame);
 window.addEventListener("load", resizeCanvas);
 window.addEventListener("resize", resizeCanvas);
 
+window.addEventListener("keydown", function (e) {
+  if (
+    isGameRunning &&
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)
+  ) {
+    e.preventDefault(); // Prevent scrolling only when the game is running
+  }
+});
+
 // Initial draw to show the canvas cleared
 draw();

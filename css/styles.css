@@ -52,16 +52,17 @@ body {
   box-sizing: border-box;
 }
 
-/* Updated Overlay Styles */
-#pong-container {
+/* Common styles for both game containers */
+.game-container {
   position: relative;
   width: 600px;
   height: 400px;
-  margin: auto;
+  margin: 40px auto; /* Add some margin between the games */
   border: 1px solid #000;
-  box-sizing: border-box; /* Ensure border is part of the size */
+  box-sizing: border-box; /* Ensure borders are within the defined size */
 }
 
+/* Overlay styles for both games */
 .overlay {
   position: absolute; /* Sit on top of the game container */
   display: flex;
@@ -80,6 +81,7 @@ body {
   color: white;
 }
 
+/* Button styles for start, restart, quit */
 .btn {
   padding: 10px 20px;
   margin: 10px;
@@ -95,7 +97,7 @@ body {
   background-color: #0d8ae5;
 }
 
-/* Full-size quit button for the menu and game over screens */
+/* Full-size quit button for menus and game over screens */
 .quit-btn-large {
   padding: 10px 20px;
   background-color: #e53e3e;
@@ -110,24 +112,14 @@ body {
   background-color: #c53030;
 }
 
-/* Small quit button for gameplay */
-.quit-btn-small {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px;
-  width: 30px;
-  height: 30px;
-  background-color: #e53e3e;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 18px; /* Adjust font size for the small version */
-  text-align: center;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.quit-btn-small:hover {
-  background-color: #c53030;
+/* Game-specific heading styles */
+.game-heading {
+  text-align: center; /* Center the headings above the containers */
+  font-size: 24px; /* Slightly larger font size for emphasis */
+  font-weight: bold; /* Bold to make them stand out */
+  color: #333; /* Professional dark color */
+  margin-bottom: 20px; /* Space between the heading and game container */
+  margin-top: 40px; /* Space between sections */
+  text-transform: uppercase; /* Optional: Uppercase styling */
+  letter-spacing: 1px; /* Adds a subtle spacing between letters */
 }

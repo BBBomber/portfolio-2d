@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games - Pong</title>
+    <title>Games - Pong & Snake</title>
     <link href="dist/styles.css" rel="stylesheet" />
   </head>
   <body>
@@ -21,13 +21,9 @@
     </header>
 
     <main>
-      <h1>Pong Game</h1>
-
-      <!-- Game Container to scope the canvas and overlays -->
-      <div
-        id="pong-container"
-        style="position: relative; width: 600px; height: 400px; margin: auto"
-      >
+      <!-- Pong Game Section -->
+      <h1 class="game-heading">Pong Game</h1>
+      <div id="pong-container" class="game-container">
         <canvas
           id="pong-game"
           width="600"
@@ -35,7 +31,7 @@
           style="border: 1px solid #000"
         ></canvas>
 
-        <!-- Start Menu Overlay -->
+        <!-- Pong Start Menu Overlay -->
         <div id="start-menu" class="overlay" style="display: flex">
           <div class="overlay-content">
             <h2>Welcome to Pong!</h2>
@@ -43,7 +39,7 @@
           </div>
         </div>
 
-        <!-- Game Over Overlay -->
+        <!-- Pong Game Over Overlay -->
         <div id="game-over" class="overlay" style="display: none">
           <div class="overlay-content">
             <h2>Game Over</h2>
@@ -53,13 +49,51 @@
           </div>
         </div>
 
-        <!-- Quit Button -->
+        <!-- Pong Quit Button -->
         <button id="quit-game" class="btn quit-btn-large" style="display: none">
+          Quit Game
+        </button>
+      </div>
+
+      <!-- Snake Game Section -->
+      <h1 class="game-heading">Snake Game</h1>
+      <div id="snake-container" class="game-container">
+        <canvas
+          id="snake-game"
+          width="600"
+          height="400"
+          style="border: 1px solid #000"
+        ></canvas>
+
+        <!-- Snake Start Menu Overlay -->
+        <div id="snake-start-menu" class="overlay" style="display: flex">
+          <div class="overlay-content">
+            <h2>Welcome to Snake!</h2>
+            <button id="snake-start-button" class="btn">Start Game</button>
+          </div>
+        </div>
+
+        <!-- Snake Game Over Overlay -->
+        <div id="snake-game-over" class="overlay" style="display: none">
+          <div class="overlay-content">
+            <h2>Game Over</h2>
+            <button id="snake-restart-button" class="btn">Restart Game</button>
+            <button id="snake-quit-button" class="btn">Quit</button>
+          </div>
+        </div>
+
+        <!-- Snake Quit Button -->
+        <button
+          id="snake-quit-game"
+          class="btn quit-btn-large"
+          style="display: none"
+        >
           Quit Game
         </button>
       </div>
     </main>
 
     <script src="js/pong.js"></script>
+    <script src="js/snake.js"></script>
   </body>
 </html>
