@@ -3,74 +3,119 @@ let snakeCanvas = document.getElementById("snake-game");
 let snakeCtx = snakeCanvas.getContext("2d");
 let snake = [{ x: 200, y: 200 }];
 let food = { x: 300, y: 300 };
-let direction = { x: 0, y: 0 };
-let snakeSpeed = 10;
+let currentDirection = { x: 0, y: 0 }; // The current movement direction of the snake
+let nextDirection = { x: 0, y: 0 }; // The next movement direction based on keypress
+let snakeSpeed = 5; // Speed in cells per second
 let snakeSize = 20;
 let snakeIsRunning = false;
+let snakeLastTime = 0; // Renamed lastTime to snakeLastTime
+let timeAccumulator = 0; // Time between movement
+let moveInterval = 1 / snakeSpeed; // Time between each movement in seconds
+
+// Get overlays
+const startMenu = document.getElementById("snake-start-menu");
+const gameOver = document.getElementById("snake-game-over");
+// Get buttons
+const startButton = document.getElementById("snake-start-button");
+const quitButton = document.getElementById("snake-quit-button");
+const restartButton = document.getElementById("snake-restart-button");
+const quitGameButton = document.getElementById("snake-quit-game");
+
+const scoreSound = new Audio("sounds/bite.wav");
+scoreSound.preload = "auto";
 
 // Start Snake Game
-function startSnakeGame() {
+export function startSnakeGame() {
+  console.log("Starting Snake game..."); // Debugging output
   snake = [{ x: 200, y: 200 }];
-  direction = { x: snakeSize, y: 0 };
+  snakeSize = 20;
+  currentDirection = { x: snakeSize, y: 0 }; // Start moving right
+  nextDirection = { x: snakeSize, y: 0 }; // Next direction will also be right
   snakeIsRunning = true;
-  document.getElementById("snake-start-menu").style.display = "none";
-  document.getElementById("snake-quit-game").style.display = "block";
-  snakeGameLoop();
+  startMenu.style.display = "none";
+  quitGameButton.style.display = "block";
+  snakeLastTime = 0; // Reset snakeLastTime
+  timeAccumulator = 0; // Reset time accumulator
+  // Properly start the game loop by passing the timestamp from requestAnimationFrame
+  requestAnimationFrame(snakeGameLoop);
 }
 
-document
-  .getElementById("snake-restart-button")
-  .addEventListener("click", function () {
-    // Reset game state
-    snake = [{ x: 200, y: 200 }];
-    direction = { x: snakeSize, y: 0 };
-    food = { x: 300, y: 300 };
-    snakeIsRunning = true;
+export function quitGame() {
+  snakeIsRunning = false; // Stop the game loop
+  startMenu.style.display = "flex"; // Show start menu again
+  quitGameButton.style.display = "none"; // Hide quit button
+  gameOver.style.display = "none"; // Hide game over
+}
 
-    // Hide the game over screen and restart the game loop
-    document.getElementById("snake-game-over").style.display = "none";
-    snakeGameLoop();
-  });
+export function restartGame() {
+  gameOver.style.display = "none"; // Hide game over
+  startSnakeGame();
+}
 
-document
-  .getElementById("snake-quit-button")
-  .addEventListener("click", function () {
-    snakeIsRunning = false; // Stop the game
-    document.getElementById("snake-game-over").style.display = "none"; // Hide the game over screen
-    document.getElementById("snake-start-menu").style.display = "flex"; // Show the start menu again
-  });
-
-// Snake Game Loop
-function snakeGameLoop() {
+// Snake Game Loop with delta time
+function snakeGameLoop(timestamp) {
   if (!snakeIsRunning) {
-    document.getElementById("snake-quit-game").style.display = "none"; // Hide quit button when the game stops
+    console.log("Game is not running, stopping loop."); // Debugging output
     return;
   }
 
-  // Move the snake
-  moveSnake();
+  // Calculate delta time
+  if (!snakeLastTime || isNaN(snakeLastTime)) {
+    console.log("Resetting snakeLastTime"); // Log if it's reset
+    snakeLastTime = timestamp; // Initialize it to the current timestamp
+  }
 
-  // Check for game over
-  if (isGameOver()) {
-    document.getElementById("snake-game-over").style.display = "flex";
-    snakeIsRunning = false;
-    document.getElementById("snake-quit-game").style.display = "none"; // Hide quit button when the game ends
-    return;
+  const deltaTime = (timestamp - snakeLastTime) / 1000; // Convert to seconds
+
+  if (isNaN(deltaTime) || deltaTime < 0) {
+    console.error("Invalid deltaTime:", deltaTime); // Log the error
+    snakeLastTime = timestamp; // Reset the timestamp if it's invalid
+    return; // Skip this frame if deltaTime is invalid
+  }
+
+  snakeLastTime = timestamp;
+  timeAccumulator += deltaTime;
+  // Move the snake if enough time has passed
+  while (timeAccumulator > moveInterval) {
+    // Apply the nextDirection if it's not opposite of currentDirection
+    if (
+      nextDirection.x !== -currentDirection.x ||
+      nextDirection.y !== -currentDirection.y
+    ) {
+      currentDirection = nextDirection;
+    }
+
+    moveSnake();
+
+    timeAccumulator -= moveInterval; // Reduce accumulated time
   }
 
   // Draw everything
   drawSnake();
   drawFood();
+  // Check for game over
+  if (isGameOver()) {
+    gameOver.style.display = "flex";
+    snakeIsRunning = false;
+    quitGameButton.style.display = "none";
+    return;
+  }
 
-  setTimeout(snakeGameLoop, 1000 / snakeSpeed); // Control speed
+  // Continue the game loop
+  requestAnimationFrame(snakeGameLoop);
 }
 
 // Move Snake
 function moveSnake() {
-  let head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  let head = {
+    x: snake[0].x + currentDirection.x,
+    y: snake[0].y + currentDirection.y,
+  };
 
   snake.unshift(head); // Add new head
   if (head.x === food.x && head.y === food.y) {
+    scoreSound.currentTime = 0; // Reset sound
+    scoreSound.play(); // Play score sound
     generateFood(); // Eat food and generate new one
   } else {
     snake.pop(); // Remove the tail
@@ -119,26 +164,34 @@ function generateFood() {
     Math.floor(Math.random() * (snakeCanvas.height / snakeSize)) * snakeSize;
 }
 
-// Event Listeners for Snake Game
-document
-  .getElementById("snake-start-button")
-  .addEventListener("click", startSnakeGame);
-document
-  .getElementById("snake-quit-game")
-  .addEventListener("click", () => location.reload());
+// Event Listeners
+startButton.addEventListener("click", startSnakeGame);
+quitButton.addEventListener("click", quitGame);
+restartButton.addEventListener("click", restartGame);
+quitGameButton.addEventListener("click", quitGame);
+
+// Event listener for controlling the snake's direction
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowUp":
-      if (direction.y === 0) direction = { x: 0, y: -snakeSize };
+      if (currentDirection.y === 0) {
+        nextDirection = { x: 0, y: -snakeSize };
+      }
       break;
     case "ArrowDown":
-      if (direction.y === 0) direction = { x: 0, y: snakeSize };
+      if (currentDirection.y === 0) {
+        nextDirection = { x: 0, y: snakeSize };
+      }
       break;
     case "ArrowLeft":
-      if (direction.x === 0) direction = { x: -snakeSize, y: 0 };
+      if (currentDirection.x === 0) {
+        nextDirection = { x: -snakeSize, y: 0 };
+      }
       break;
     case "ArrowRight":
-      if (direction.x === 0) direction = { x: snakeSize, y: 0 };
+      if (currentDirection.x === 0) {
+        nextDirection = { x: snakeSize, y: 0 };
+      }
       break;
   }
 });

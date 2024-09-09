@@ -4,10 +4,11 @@ const ctx = canvas.getContext("2d");
 
 // Get overlays and buttons
 const startMenu = document.getElementById("start-menu");
+const finalScore = document.getElementById("final-score");
+
 const startButton = document.getElementById("start-button");
 const quitButton = document.getElementById("quit-button");
 const restartButton = document.getElementById("restart-button");
-const finalScore = document.getElementById("final-score");
 const quitGameButton = document.getElementById("quit-game");
 
 // Load sound effects
