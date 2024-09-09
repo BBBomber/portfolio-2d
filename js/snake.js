@@ -18,9 +18,34 @@ function startSnakeGame() {
   snakeGameLoop();
 }
 
+document
+  .getElementById("snake-restart-button")
+  .addEventListener("click", function () {
+    // Reset game state
+    snake = [{ x: 200, y: 200 }];
+    direction = { x: snakeSize, y: 0 };
+    food = { x: 300, y: 300 };
+    snakeIsRunning = true;
+
+    // Hide the game over screen and restart the game loop
+    document.getElementById("snake-game-over").style.display = "none";
+    snakeGameLoop();
+  });
+
+document
+  .getElementById("snake-quit-button")
+  .addEventListener("click", function () {
+    snakeIsRunning = false; // Stop the game
+    document.getElementById("snake-game-over").style.display = "none"; // Hide the game over screen
+    document.getElementById("snake-start-menu").style.display = "flex"; // Show the start menu again
+  });
+
 // Snake Game Loop
 function snakeGameLoop() {
-  if (!snakeIsRunning) return;
+  if (!snakeIsRunning) {
+    document.getElementById("snake-quit-game").style.display = "none"; // Hide quit button when the game stops
+    return;
+  }
 
   // Move the snake
   moveSnake();
@@ -29,6 +54,7 @@ function snakeGameLoop() {
   if (isGameOver()) {
     document.getElementById("snake-game-over").style.display = "flex";
     snakeIsRunning = false;
+    document.getElementById("snake-quit-game").style.display = "none"; // Hide quit button when the game ends
     return;
   }
 

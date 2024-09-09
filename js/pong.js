@@ -26,7 +26,7 @@ const ball = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   radius: 10,
-  speed: 400, // Increase this speed for faster movement
+  speed: 550, // Increase this speed for faster movement
   velocityX: 300, // Set a higher initial velocityX for faster horizontal movement
   velocityY: 200, // Set a higher initial velocityY for faster vertical movement
   color: "white",
@@ -221,8 +221,8 @@ function resetBall() {
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
   // Ensure that ball's direction is randomized a little after reset to make it less predictable
-  ball.velocityX = (Math.random() > 0.5 ? 1 : -1) * ball.speed; // Ensure velocity matches speed
-  ball.velocityY = (Math.random() > 0.5 ? 1 : -1) * ball.speed; // Ensure velocity matches speed
+  ball.velocityX = ((Math.random() > 0.5 ? 1 : -1) * ball.speed) / 2; // Ensure velocity matches speed
+  ball.velocityY = ((Math.random() > 0.5 ? 1 : -1) * ball.speed) / 2; // Ensure velocity matches speed
 }
 
 // Check for scoring
@@ -268,6 +268,8 @@ function startGame() {
   // Reset paddle positions
   player.y = (canvas.height - paddleHeight) / 2;
   computer.y = (canvas.height - paddleHeight) / 2; // Reset the computer paddle position
+  //
+  ball.speed = 550;
   resetBall();
   isGameRunning = true;
   startMenu.style.display = "none";
