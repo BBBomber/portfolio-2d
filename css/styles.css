@@ -123,3 +123,58 @@ body {
   text-transform: uppercase; /* Optional: Uppercase styling */
   letter-spacing: 1px; /* Adds a subtle spacing between letters */
 }
+
+/* Style for the nav bar */
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+}
+
+nav li {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 10px;
+}
+
+nav img {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px; /* Space between icon and text */
+}
+
+/* Glitch hover effect */
+@keyframes glitch {
+  0% {
+    transform: skew(0deg, 0deg);
+  }
+  20% {
+    transform: skew(5deg, -5deg);
+  }
+  40% {
+    transform: skew(-5deg, 5deg);
+  }
+  60% {
+    transform: skew(2deg, -2deg);
+  }
+  80% {
+    transform: skew(-2deg, 2deg);
+  }
+  100% {
+    transform: skew(0deg, 0deg);
+  }
+}
+
+nav a:hover {
+  animation: glitch 0.3s ease-in-out;
+  color: #ffcc00;
+}
