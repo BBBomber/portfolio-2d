@@ -21,13 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
     grid = createGrid(); // Create the grid when resizing
   }
 
-  // Create the grid (with random initial state)
+  // Create the grid with a 30% chance of each cell being green (alive)
   function createGrid() {
     const arr = new Array(cols);
     for (let i = 0; i < cols; i++) {
       arr[i] = new Array(rows);
       for (let j = 0; j < rows; j++) {
-        arr[i][j] = Math.floor(Math.random() * 2); // Random 0 or 1
+        arr[i][j] = Math.random() < 0.1 ? 1 : 0; // 30% chance of being alive (1), 70% chance of being dead (0)
       }
     }
     return arr;
@@ -118,8 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       const reversedSpeed = 1000 - speedValue; // Flip the speed value
       updateSpeed = Math.max(reversedSpeed, 10); // Ensure a minimum speed
-      isPaused = false; // If speed is > 0, unpause
-      playPauseBtn.textContent = "Pause";
+      //isPaused = false; // If speed is > 0, unpause
+      //playPauseBtn.textContent = "Pause";
       clearInterval(gameInterval); // Clear the previous interval
       gameInterval = setInterval(gameLoop, updateSpeed); // Set new speed
     }
