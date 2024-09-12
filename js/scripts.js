@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const cellSize = 8; // Smaller cell size for more grid cells
   let cols, rows;
 
+  const controlPanel = document.getElementById("control-panel");
+  const togglePanelBtn = document.querySelector(".toggle-btn"); // Fix for toggle button
+  const hideAllBtn = document.getElementById("hide-all-btn");
+
   // Initialize the canvas to fill the screen
   function updateCanvasSize() {
     canvas.width = window.innerWidth;
@@ -154,6 +158,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Control panel toggle button logic
+  togglePanelBtn.addEventListener("click", function () {
+    controlPanel.classList.toggle("collapsed");
+    togglePanelBtn.textContent = controlPanel.classList.contains("collapsed")
+      ? "►"
+      : "▼";
+  });
+
+  // Hide everything except control panel
+  hideAllBtn.addEventListener("click", function () {
+    document.querySelector("header").style.display = "none";
+    document.querySelector("main").style.display = "none";
+    document.querySelector("footer").style.display = "none";
+    hideAllBtn.textContent = "Show Everything";
+    hideAllBtn.removeEventListener("click", hideAllFunc);
+    hideAllBtn.addEventListener("click", showAllFunc);
+  });
+
+  function showAllFunc() {
+    document.querySelector("header").style.display = "block";
+    document.querySelector("main").style.display = "block";
+    document.querySelector("footer").style.display = "block";
+    hideAllBtn.textContent = "Hide Everything";
+    hideAllBtn.removeEventListener("click", showAllFunc);
+    hideAllBtn.addEventListener("click", hideAllFunc);
+  }
+
+  function hideAllFunc() {
+    document.querySelector("header").style.display = "none";
+    document.querySelector("main").style.display = "none";
+    document.querySelector("footer").style.display = "none";
+    hideAllBtn.textContent = "Show Everything";
+  }
   // Initialize canvas size and start the game
   updateCanvasSize();
   window.addEventListener("resize", updateCanvasSize); // Resize handler
