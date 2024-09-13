@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const controlPanel = document.getElementById("control-panel");
   const togglePanelBtn = document.querySelector(".toggle-btn"); // Fix for toggle button
   const hideAllBtn = document.getElementById("hide-all-btn");
+  const controlTitle = document.querySelector(".control-title");
 
   // Initialize the canvas to fill the screen
   function updateCanvasSize() {
@@ -116,17 +117,10 @@ document.addEventListener("DOMContentLoaded", function () {
   speedControl.addEventListener("input", function (e) {
     const speedValue = e.target.value;
 
-    if (speedValue == 0) {
-      isPaused = true;
-      playPauseBtn.textContent = "Play";
-    } else {
-      const reversedSpeed = 1000 - speedValue; // Flip the speed value
-      updateSpeed = Math.max(reversedSpeed, 10); // Ensure a minimum speed
-      //isPaused = false; // If speed is > 0, unpause
-      //playPauseBtn.textContent = "Pause";
-      clearInterval(gameInterval); // Clear the previous interval
-      gameInterval = setInterval(gameLoop, updateSpeed); // Set new speed
-    }
+    const reversedSpeed = 1000 - speedValue; // Flip the speed value
+    updateSpeed = Math.max(reversedSpeed, 10); // Ensure a minimum speed
+    clearInterval(gameInterval); // Clear the previous interval
+    gameInterval = setInterval(gameLoop, updateSpeed); // Set new speed
   });
 
   // Reset Automata: Generates a new random grid
@@ -158,11 +152,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  let isDragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  // Dragging logic for control panel
+  controlTitle.addEventListener("mousedown", function (e) {
+    isDragging = true;
+    dragOffsetX = e.clientX - controlPanel.offsetLeft;
+    dragOffsetY = e.clientY - controlPanel.offsetTop;
+    controlTitle.style.cursor = "grabbing"; // Change cursor to indicate dragging
+  });
+
+  document.addEventListener("mousemove", function (e) {
+    if (isDragging) {
+      controlPanel.style.left = `${e.clientX - dragOffsetX}px`;
+      controlPanel.style.top = `${e.clientY - dragOffsetY}px`;
+    }
+  });
+
+  document.addEventListener("mouseup", function () {
+    isDragging = false;
+    controlTitle.style.cursor = "grab"; // Reset cursor
+  });
+
   // Control panel toggle button logic
   togglePanelBtn.addEventListener("click", function () {
     controlPanel.classList.toggle("collapsed");
     togglePanelBtn.textContent = controlPanel.classList.contains("collapsed")
-      ? "►"
+      ? "▲"
       : "▼";
   });
 
@@ -191,6 +209,19 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("footer").style.display = "none";
     hideAllBtn.textContent = "Show Everything";
   }
+
+  // Tooltip functionality for Game of Life rules
+  const tooltipIcon = document.getElementById("tooltip-icon");
+  const tooltipBox = document.getElementById("tooltip-box");
+
+  tooltipIcon.addEventListener("mouseenter", function () {
+    tooltipBox.style.display = "block"; // Show the tooltip on hover
+  });
+
+  tooltipIcon.addEventListener("mouseleave", function () {
+    tooltipBox.style.display = "none"; // Hide the tooltip when not hovering
+  });
+
   // Initialize canvas size and start the game
   updateCanvasSize();
   window.addEventListener("resize", updateCanvasSize); // Resize handler

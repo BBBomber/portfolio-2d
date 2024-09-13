@@ -34,8 +34,12 @@ nav a:hover {
 }
 
 main {
-  padding: 2rem;
-  z-index: 1; /* Ensure content stays on top */
+  padding: 20px;
+  position: relative;
+  top: 10px; /* Adjust this based on your header height */
+  left: 20px; /* Align to the left */
+  width: 50%; /* Adjust the width as needed */
+  z-index: 1;
 }
 
 footer {
@@ -54,18 +58,6 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
-
-/* Background for the body */
-/* body {
-  background-image: url("../assets/images/starry-tile.png");
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  background-attachment: fixed; 
-  background-color: #f5f5f5; 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
 
 /* Common styles for both game containers */
 .game-container {
@@ -217,9 +209,10 @@ nav a:hover {
 
 /* Docked control panel */
 #control-panel {
-  position: fixed;
-  top: 10%;
-  right: 0;
+  position: absolute; /* Not fixed to the right anymore */
+  top: 35%; /* Center vertically */
+  right: 0; /* Start from the right side */
+  transform: translateY(-50%); /* Adjust position to truly center */
   background-color: rgba(
     255,
     255,
@@ -231,7 +224,9 @@ nav a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 10;
   width: 250px; /* Control panel width */
-  transition: transform 0.3s ease;
+  transition: height 0.3s ease, transform 0.3s ease;
+  max-height: 400px; /* Give the panel a maximum height */
+  overflow: hidden;
 }
 
 /* Control panel title bar */
@@ -239,14 +234,16 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff; /* Solid title area */
-  padding: 5px 10px;
-  border-radius: 5px 0 0 0;
+  background-color: #c8e3ff; /* Solid title area */
+  padding: 5px 8px;
+  border-radius: 5px 5px 0 5px;
+  font-size: 12px; /* Smaller text */
+  cursor: grab;
 }
 
 /* Hidden state for control panel */
-#control-panel.collapsed {
-  transform: translateX(100%);
+#control-panel.collapsed .control-content {
+  display: none; /* Collapse the content but keep the title */
 }
 
 .toggle-btn {
@@ -256,7 +253,7 @@ nav a:hover {
 }
 
 .toggle-btn:hover {
-  color: #0056b3;
+  filter: brightness(2); /* Increase brightness by 50% */
 }
 
 /* Hide all content except the canvas */
@@ -285,4 +282,77 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.main-content {
+  background-color: rgba(255, 255, 255, 0.85); /* See-through background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align text to the left */
+  margin-bottom: 30px; /* Add space below the main content */
+}
+
+.tooltip-icon {
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 5px;
+  color: white; /* Icon color */
+  background-color: #ff9800; /* Identifiable color */
+  border-radius: 50%; /* Circle shape */
+  padding: 2px; /* Reduce padding for a smaller circle */
+  width: 24px;
+  height: 24px;
+  text-align: center; /* Center the icon inside the circle */
+  line-height: 16px; /* Adjust this to vertically align the icon */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.tooltip-icon:hover {
+  background-color: #ff5722; /* Slightly darker color on hover */
+}
+
+/* Tooltip styling */
+.tooltip-box {
+  display: none;
+  position: absolute; /* Positioned relative to the icon */
+  background-color: #ffffff;
+  color: #333;
+  padding: 20px; /* Increase padding */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px; /* Increase width slightly */
+  max-width: 80vw;
+  top: 50%; /* Align the tooltip with the center of the icon vertically */
+  left: calc(
+    100% + 10px
+  ); /* Position to the right of the icon with a 10px gap */
+  transform: translateY(
+    -50%
+  ); /* Vertically center the tooltip relative to the icon */
+  z-index: 20;
+  text-align: center;
+  font-size: 16px; /* Slightly increase font size */
+  opacity: 1;
+}
+
+/* Ensure the image is fully opaque and centered */
+.rules-image {
+  width: 100%; /* Make image fit the width of the tooltip box */
+  height: auto; /* Maintain aspect ratio */
+  opacity: 1; /* Ensure image is fully opaque */
+  margin-top: 10px;
+}
+
+.tooltip-box ul {
+  padding-left: 20px;
+}
+
+.tooltip-box strong {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
 }
