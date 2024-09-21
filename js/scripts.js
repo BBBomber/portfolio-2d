@@ -211,16 +211,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Tooltip functionality for Game of Life rules
-  const tooltipIcon = document.getElementById("tooltip-icon");
-  const tooltipBox = document.getElementById("tooltip-box");
+  //const tooltipIcon = document.getElementById("tooltip-icon");
+  //const tooltipBox = document.getElementById("tooltip-box");
 
-  tooltipIcon.addEventListener("mouseenter", function () {
-    tooltipBox.style.display = "block"; // Show the tooltip on hover
-  });
+  // tooltipIcon.addEventListener("mouseenter", function () {
+  //   tooltipBox.style.display = "block"; // Show the tooltip on hover
+  // });
 
-  tooltipIcon.addEventListener("mouseleave", function () {
-    tooltipBox.style.display = "none"; // Hide the tooltip when not hovering
-  });
+  // tooltipIcon.addEventListener("mouseleave", function () {
+  //   tooltipBox.style.display = "none"; // Hide the tooltip when not hovering
+  // });
 
   // Initialize canvas size and start the game
   updateCanvasSize();

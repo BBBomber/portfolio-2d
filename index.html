@@ -23,13 +23,9 @@
             >
           </li>
           <li>
-            <a href="hobbies.html"
-              ><img src="assets/icons/zoom.svg" alt="Hobbies" /> About Me</a
-            >
-          </li>
-          <li>
             <a href="projects.html"
-              ><img src="assets/icons/diary.svg" alt="Projects" /> Projects</a
+              ><img src="assets/icons/diary.svg" alt="Projects" />
+              Projects/Hobbies</a
             >
           </li>
           <li>
@@ -39,7 +35,7 @@
           </li>
           <li>
             <a href="games.html"
-              ><img src="assets/icons/game.svg" alt="Games" /> Games</a
+              ><img src="assets/icons/game.svg" alt="Games" /> Arcade</a
             >
           </li>
         </ul>
@@ -48,40 +44,8 @@
 
     <main>
       <section class="main-content">
-        <h1 class="main-title">Welcome to my portfolio!!</h1>
-        <p>
-          My name is Yashasvi, and I've been working as a game dev/programmer
-          since 2021.
-        </p>
-        <p>
-          I initially thought that I would create a simple portfolio/resume
-          website, but ended up adding things that I find interesting to it
-          until I was satisfied, oops.
-        </p>
-        <p>
-          By the way, the background is running
-          <a
-            href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
-            target="_blank"
-            >Conway's Game of Life</a
-          >.
-          <span class="tooltip-icon" id="tooltip-icon">ℹ</span>
-        </p>
-        <p>
-          Try clicking somewhere on it and just watch the algorithm do its
-          thing. The control panel to the right should help you out (hide
-          everything!).
-        </p>
-        <p>Hope you enjoy going through everything!</p>
-        <!-- Tooltip box -->
-        <div class="tooltip-box" id="tooltip-box">
-          <strong>Conway's Game of Life Rules:</strong>
-          <img
-            src="assets/images/Conway-Rules.jpg"
-            alt="Conway's Game of Life Rules"
-            class="rules-image"
-          />
-        </div>
+        <!-- Terminal Container -->
+        <div id="terminal"></div>
       </section>
     </main>
 
@@ -95,15 +59,16 @@
         <label for="speed-control">Update Speed:</label>
         <input type="range" id="speed-control" min="0" max="1000" value="200" />
         <button id="play-pause-btn">Pause</button>
-        <button id="reset-btn">Reset Automata</button>
-        <button id="clear-btn">Clear Automata</button>
+        <button id="reset-btn">Reset Cells</button>
+        <button id="clear-btn">Clear Cells</button>
       </div>
     </div>
 
     <footer>
-      <p>&copy; 2024 Your Name</p>
+      <p>&copy; 2024 Yashasvi Chopra</p>
     </footer>
 
     <script src="js/scripts.js"></script>
+    <script src="js/terminal.js"></script>
   </body>
 </html>

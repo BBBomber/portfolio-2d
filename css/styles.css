@@ -297,13 +297,51 @@ button:hover {
   background-color: #0056b3;
 }
 
-.main-content {
-  background-color: rgba(255, 255, 255, 0.85); /* See-through background */
+/* Terminal styles */
+#terminal {
+  background-color: #000; /* Black background */
+  color: #fafffa; /* Green text */
+  font-family: "Courier New", Courier, monospace; /* Monospace font */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: left; /* Align text to the left */
-  margin-bottom: 30px; /* Add space below the main content */
+  overflow-y: auto; /* Make it scrollable */
+  max-height: 400px; /* Limit the height */
+  line-height: 1.4;
+  white-space: pre-wrap; /* Preserve whitespace */
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Blinking cursor effect */
+#terminal::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background-color: #fafffa;
+  margin-left: 2px;
+  animation: blink 1s steps(2, start) infinite;
+  position: absolute;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Adjust main-content to fit the terminal */
+.main-content {
+  background-color: transparent; /* Make background transparent */
+  padding: 0; /* Remove padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  #terminal {
+    max-height: 300px;
+    padding: 10px;
+  }
 }
 
 .tooltip-icon {
