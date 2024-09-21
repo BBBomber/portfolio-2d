@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const terminal = document.getElementById("terminal");
 
-  // Define the messages and interaction flow
+  // Preload the audio
+  const typeSound = new Audio("sounds/click.wav");
+  typeSound.preload = "auto";
+  typeSound.volume = 0.1; // Adjust volume as needed
+
   const messages = [
     {
       type: "message",
@@ -9,12 +13,38 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       type: "message",
-      content: "I've been working as a Game Developer since 2022 now.",
+      content:
+        "Hello! \nI've been working as a Game Developer since 2022 now...",
+    },
+    {
+      type: "ascii",
+      content: `
+      ⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⡏⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿
+      ⣿⣿⣿⣿⣿⣿⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿
+      ⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠙⠿⠿⠿⠻⠿⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀⣸⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣴⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠀⠸⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠤⠄⠀⠀⠀⠉⠁⠀⠀⠀⠀⢿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠀⠠⣿⣿⣷⠀⢸⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⡀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠀⠉⠉⠁⠀⠀⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿   
+      \nPress Enter to continue...⠀⠀  
+        `,
     },
     {
       type: "message",
       content:
-        "But more importantly, you can CLICK ON THE WEIRD BACKGROUND to make it weirder.",
+        "But more importantly, CLICK ON THE WEIRD BACKGROUND to make it weirder.",
+    },
+    {
+      type: "message",
+      content:
+        "The control panel to the right should help you out if you want to mess around with the background. \nI recommend hiding everything.",
     },
     {
       type: "input",
@@ -24,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return {
             type: "message",
             content:
-              "Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway in 1970.\n in simple words it's a game where cells live, die, or reproduce based on a few rules, creating pretty cool patterns.",
+              "Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway in 1970.\nIn simple words, it's a game where cells live, die, or reproduce based on a few rules, creating pretty cool patterns.",
           };
         } else {
           return {
@@ -37,15 +67,11 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       type: "message",
       content:
-        "The control panel to the right should help you out if you wanna play the game. \nI recommend hiding everything.",
+        "That's all for now. \nFeel free to look around, See ya... \n.. \n... unless..",
     },
     {
       type: "message",
-      content: "That is all for now, feel free to look around, tata.",
-    },
-    {
-      type: "message",
-      content: "........ \n... \nare you that bored..",
+      content: "........ \n... \nare you that bored..?",
     },
     {
       type: "message",
@@ -75,6 +101,33 @@ document.addEventListener("DOMContentLoaded", function () {
       content:
         "That is it for the free trial. Pay me if you want to talk more.",
     },
+    {
+      type: "ascii",
+      content: `
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⠀⠀⢀⣤⣤⣤⣶⣶⣷⣤⣀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣶⣶⠀⠀⠀⠀⣠⣾⣿⣿⡇⠀⣿⣿⣿⣿⠿⠛⠉⠉⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⢀⣿⣿⣶⡀⠀⠀⠀⠀⠀⣾⣿⣿⣿⡄⠀⢀⣴⣿⣿⣿⣿⠁⢸⣿⣿⣿⣀⣤⡀⠀⠀⠀
+⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⣼⣿⣿⣿⣧⠀⠀⠀⠀⢰⣿⣿⣿⣿⣇⣠⣿⣿⣿⣿⣿⡏⢠⣿⣿⣿⣿⣿⡿⠗⠂⠀⠀
+⠀⠀⠀⣰⣾⣿⣿⠟⠛⠉⠉⠉⠉⠋⠀⠀⠀⣰⣿⣿⣿⣿⣿⣇⣠⣤⣤⣿⣿⣿⢿⣿⣿⣿⣿⢿⣿⣿⡿⠀⣼⣿⣿⡟⠉⠁⢀⣀⡄⠀⠀
+⠀⢀⣾⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⣴⣿⣿⣿⣿⡿⣿⣿⣿⡏⠈⢿⣿⣿⠏⣾⣿⣿⠃⢠⣿⣿⣿⣶⣶⣿⣿⣿⡷⠦⠀
+⢠⣾⣿⡿⠀⠀⠀⣀⣠⣴⣶⣿⣿⡷⠀⣠⣿⣿⣿⣿⡿⠟⣿⣿⣿⣠⣿⣿⣿⠀⠀⠀⠀⠁⢸⣿⣿⡏⠀⣼⣿⣿⣿⠿⠛⠛⠉⠀⠀⠀⠀
+⢸⣿⣿⠣⣴⣾⣿⣿⣿⣿⣿⣿⡿⠃⣰⣿⣿⣿⠋⠁⠀⠀⠸⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠸⠿⠿⠀⠀⠛⠛⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠸⣿⣿⣆⣉⣻⣭⣿⣿⣿⡿⠋⠀⠀⢿⣿⡿⠁⠀⠀⠀⠀⠀⠹⠟⠛⠛⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠙⠿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣶⣶⣶⣶⣦⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣷⠄⣤⣤⣤⣤⣶⣾⣷⣴⣿⣿⣿⣿⠿⠿⠛⣻⣿⣿⣷⡄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣄⠀⣶⣶⣤⡀⠀⠀⠀⠀⠀⠀⢀⣴⣿⠋⢠⣿⣿⣿⠿⠛⠋⠉⠛⣿⣿⣿⠏⢀⣤⣾⣿⣿⡿⠋⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣾⣿⣿⣿⣿⠓⢹⣿⣿⣷⠀⠀⠀⠀⢀⣶⣿⡿⠁⠀⣾⣿⣿⣟⣠⣤⠀⠀⢸⣿⣿⣿⣾⣿⣿⣿⡟⠋⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠸⣿⣦⡈⣿⣿⣿⡇⠀⠀⣰⣿⣿⡿⠁⠀⢸⣿⣿⣿⣿⣿⠿⠷⢀⣿⣿⣿⣿⡿⠛⣿⣿⣿⡀⠀⠀⠀
+⠀⠀⠀⠀⢀⣼⣿⣿⡿⠋⠀⠀⠀⠀⣿⣿⣧⠘⣿⣿⣿⡀⣼⣿⣿⡟⠀⠀⢀⣿⣿⣿⠋⠁⠀⣀⣀⣼⣿⣿⡟⠁⠀⠀⠘⣿⣿⣧⠀⠀⠀
+⠀⠀⠀⠀⣼⣿⣿⡟⠀⠀⠀⠀⠀⣠⣿⣿⣿⠀⢹⣿⣿⣿⣿⣿⡟⠀⠀⠀⣼⣿⣿⣷⣶⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠸⣿⣿⡆⠀⠀
+⠀⠀⠀⠀⢹⣿⣿⣇⠀⠀⢀⣠⣴⣿⣿⣿⡿⠀⠈⣿⣿⣿⣿⡟⠀⠀⠀⢰⣿⣿⣿⠿⠟⠛⠉⠁⠸⢿⡟⠀⠀⠀⠀⠀⠀⠀⠘⠋⠁⠀⠀
+⠀⠀⠀⠀⠈⢻⣿⣿⣿⣾⣿⣿⣿⣿⣿⠟⠁⠀⠀⠸⣿⣿⡿⠁⠀⠀⠀⠈⠙⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠛⠿⠿⠿⠿⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                                          
+                  GAME OVER! Thanks for visiting.
+      `,
+    },
     // You can add more messages or inputs as needed
   ];
 
@@ -90,12 +143,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (charIndex < message.length) {
         const nextChar = message.charAt(charIndex);
         terminal.innerHTML += nextChar;
-
+        playTypeSound();
         charIndex++;
         terminal.scrollTop = terminal.scrollHeight; // Auto scroll to bottom
         setTimeout(typeChar, typingSpeed);
       } else {
         terminal.innerHTML += "\n\nPress Enter to continue...\n";
+
         isTyping = false;
         charIndex = 0;
         terminal.scrollTop = terminal.scrollHeight;
@@ -106,23 +160,48 @@ document.addEventListener("DOMContentLoaded", function () {
     typeChar();
   }
 
+  function playTypeSound() {
+    const soundClone = typeSound.cloneNode();
+    soundClone.volume = 0.1;
+    soundClone.play().catch((error) => {
+      console.error("Audio playback failed:", error);
+    });
+  }
+
   function onEnterPress(event) {
     if (event.key === "Enter" && !isTyping) {
       document.removeEventListener("keydown", onEnterPress);
       terminal.innerHTML += "\n";
       if (messageIndex < messages.length) {
         const currentMessage = messages[messageIndex];
-        if (currentMessage.type === "message") {
-          typeMessage(currentMessage.content, () => {
+        switch (currentMessage.type) {
+          case "message":
+            typeMessage(currentMessage.content, () => {
+              messageIndex++;
+              document.addEventListener("keydown", onEnterPress);
+            });
+            break;
+
+          case "input":
+            promptInput(currentMessage.content, currentMessage.handler);
+            break;
+
+          case "ascii":
+            // Append ASCII art instantly
+            terminal.innerHTML += `\n${currentMessage.content}\n`;
             messageIndex++;
             document.addEventListener("keydown", onEnterPress);
-          });
-        } else if (currentMessage.type === "input") {
-          promptInput(currentMessage.content, currentMessage.handler);
+            break;
+
+          default:
+            console.warn(`Unknown message type: ${currentMessage.type}`);
+            messageIndex++;
+            document.addEventListener("keydown", onEnterPress);
         }
       } else {
         // All messages have been displayed
-        terminal.innerHTML += "\nEnd of messages.\n";
+        // Optionally, add a final action here
+        // For example, clearing the terminal or redirecting the user
       }
     }
   }
