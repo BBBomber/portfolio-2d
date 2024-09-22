@@ -12,8 +12,8 @@ const restartButton = document.getElementById("restart-button");
 const quitGameButton = document.getElementById("quit-game");
 
 // Load sound effects
-const bounceSound = new Audio("sounds/bounce.wav");
-const scoreSound = new Audio("sounds/score.wav");
+const bounceSound = new Audio("../sounds/bounce.wav");
+const scoreSound = new Audio("../sounds/score.wav");
 
 // Ensure sounds play only once per collision
 bounceSound.preload = "auto";
