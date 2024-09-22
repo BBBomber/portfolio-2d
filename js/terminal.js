@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       type: "message",
       content:
-        "That's all for now. \nFeel free to look around, See ya... \n.. \n... unless..",
+        "That's all for now. \nFeel free to look around, See ya... \n.. \n... \nunless..",
     },
     {
       type: "message",
