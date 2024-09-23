@@ -39,22 +39,27 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       type: "message",
       content:
-        "But more importantly, CLICK ON THE WEIRD BACKGROUND to make it weirder.",
+        "But more importantly, have you noticed the control panel to the right?.",
     },
     {
       type: "message",
       content:
-        "The control panel to the right should help you out if you want to mess around with the background. \nI recommend hiding everything.",
+        "Try clicking on the pause button, or change the speed of the simulation running in the background.",
+    },
+    {
+      type: "message",
+      content:
+        "The background is running an algorithm known as Conway's Game of Life",
     },
     {
       type: "input",
-      content: "Type 'help' to learn more about Conway's Game of Life.",
+      content: "Type 'help' to learn the rule of Conway's Game of Life.",
       handler: function (input) {
         if (input.toLowerCase() === "help") {
           return {
             type: "message",
             content:
-              "Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway in 1970.\nIn simple words, it's a game where cells live, die, or reproduce based on a few rules, creating pretty cool patterns.",
+              "Underpopulation: A live cell with fewer than 2 live neighbors dies.\nSurvival: A live cell with 2 or 3 live neighbors stays alive.\nOverpopulation: A live cell with more than 3 live neighbors dies.\nReproduction: A dead cell with exactly 3 live neighbors becomes alive.",
           };
         } else {
           return {
@@ -63,6 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
           };
         }
       },
+    },
+    {
+      type: "message",
+      content:
+        "You can mess around with the simulation btw. \nSimply pause, hide everything, and start adding your own pixels!",
     },
     {
       type: "message",
