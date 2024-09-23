@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (charIndex < message.length) {
         const nextChar = message.charAt(charIndex);
         terminal.innerHTML += nextChar;
-        playTypeSound();
+        //playTypeSound();
         charIndex++;
         terminal.scrollTop = terminal.scrollHeight; // Auto scroll to bottom
         setTimeout(typeChar, typingSpeed);
