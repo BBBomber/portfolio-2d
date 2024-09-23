@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (charIndex < message.length) {
         const nextChar = message.charAt(charIndex);
         terminal.innerHTML += nextChar;
-        //playTypeSound();
+        playTypeSound();
         charIndex++;
         terminal.scrollTop = terminal.scrollHeight; // Auto scroll to bottom
         setTimeout(typeChar, typingSpeed);
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function playTypeSound() {
     const soundClone = typeSound.cloneNode();
-    soundClone.volume = 0.1;
+    soundClone.volume = 0.07;
     soundClone.play().catch((error) => {
       console.error("Audio playback failed:", error);
     });
